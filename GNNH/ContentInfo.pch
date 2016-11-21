@@ -1,0 +1,43 @@
+#import "SettingViewController.h"
+#import "DuanZiViewController.h"
+#import "VideoViewController.h"
+#import "PictureViewController.h"
+#import "ContentCell.h"
+#import "HTTPManager.h"
+#import "Tool.h"
+
+
+#import "Masonry.h"
+#import "SVProgressHUD.h"
+#import "AFNetworking.h"
+#import "MJChiBaoZiHeader.h"
+#import "MJRefresh.h"
+#import "SDWebImage/UIImageView+WebCache.h"
+
+
+
+
+#define SetScreenBounds [UIScreen mainScreen].bounds
+#define MainHeight      [[UIScreen mainScreen] bounds].size.height
+#define MainWidth       [[UIScreen mainScreen] bounds].size.width
+#define MainScale       [[UIScreen mainScreen] scale]
+#define SetImg(name)    [UIImage imageNamed:name]
+#define SetBarImg(name) [[UIImage imageNamed:name] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]
+
+
+
+#define GoToNextVC \
+self.hidesBottomBarWhenPushed=YES; \
+[self.navigationController pushViewController:vc animated:YES]; \
+self.hidesBottomBarWhenPushed=NO;
+
+
+#define ShowActionSheect \
+UIActionSheet * actionSheet = [[UIActionSheet alloc]initWithTitle:@"举报" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"色情",@"广告",@"版权",@"内容重复", nil]; \
+[actionSheet showInView:self.view];
+
+
+#define CheckNetLine @"www.baidu.com"
+#define VideoFolderName @"vedioFolder"
+
+

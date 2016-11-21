@@ -7,6 +7,8 @@
 //
 
 #import "AppDelegate.h"
+#import "RootViewController.h"
+#import "XHLaunchAd.h" //启动广告
 
 @interface AppDelegate ()
 
@@ -15,31 +17,64 @@
 @implementation AppDelegate
 
 
-- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    // Override point for customization after application launch.
+-(BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
+{
+    self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+    self.window.backgroundColor = [UIColor whiteColor];
+    [self.window makeKeyAndVisible];
+    
+    
+    self.window.rootViewController = [[RootViewController alloc]init];
+    
+    
+    //检查网络
+    [HTTPManager checkNetWork:^(NSInteger statusIndex) {
+        NSLog(@"当前网络为 = %ld",statusIndex);
+    }];
+    
+    
+    
+    //加载广告页面
+    //[self ADSet];
+    
+    
+    
+    //---------任务--------
+    //播放器            (完成)
+    //视频保存到本地     (完成)
+    //进度条_旋转圆      (完成)
+    //第三方集成
+    //用户信息          (完成)
+    //gif             (完成)
+    //发段子           (完成) (发图片,视频)
+    //评论             (完成)
+    
     return YES;
 }
 
-- (void)applicationWillResignActive:(UIApplication *)application {
-    // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
-    // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
+- (void)applicationWillResignActive:(UIApplication *)application {}
+
+- (void)applicationDidEnterBackground:(UIApplication *)application {}
+
+- (void)applicationWillEnterForeground:(UIApplication *)application {}
+
+- (void)applicationDidBecomeActive:(UIApplication *)application {}
+
+- (void)applicationWillTerminate:(UIApplication *)application {}
+
+
+#pragma mark - 广告
+-(void)ADSet
+{
+    XHLaunchAd *launchAd = [[XHLaunchAd alloc] initWithFrame:CGRectMake(0, 0,self.window.bounds.size.width,  self.window.bounds.size.height) andDuration:3];
+    
+    NSString *imgUrlString =@"http://s7.sinaimg.cn/middle/8246ad85tb55b187c2946&690";
+    [launchAd imgUrlString:imgUrlString options:XHWebImageRefreshCached completed:^(UIImage *image, NSURL *url) {
+        //异步加载图片完成回调(若需根据图片实际尺寸,刷新广告frame,可在这里操作)
+    }];
+
+    launchAd.hideSkip = NO;
 }
 
-- (void)applicationDidEnterBackground:(UIApplication *)application {
-    // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
-    // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
-}
-
-- (void)applicationWillEnterForeground:(UIApplication *)application {
-    // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
-}
-
-- (void)applicationDidBecomeActive:(UIApplication *)application {
-    // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-}
-
-- (void)applicationWillTerminate:(UIApplication *)application {
-    // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
-}
 
 @end
